@@ -70,15 +70,13 @@ To send data to an InfluxDB {{< current-version >}} instance, enable the
 [`influxdb_v2` output plugin](https://github.com/influxdata/telegraf/blob/master/plugins/outputs/influxdb_v2/README.md)
 in the `telegraf.conf`.
 
-To find an example InfluxDB v2 output plugin configuration in the UI:
-
-1. In the navigation menu on the left, select **Load Data** > **Telegraf**.
-
-    {{< nav-icon "load data" >}}
-
-2. Click **InfluxDB Output Plugin**.
-3. Click **Copy to Clipboard** to copy the example configuration or **Download Config** to save a copy.
-4. Paste the example configuration into your `telegraf.conf` and specify the options below.
+```toml
+[[outputs.influxdb_v2]]
+  urls = ["https://cluster-id.influxdb.io"]
+  token = "$INFLUX_TOKEN"
+  organization = ""
+  bucket = "$INFLUX_DATABASE"
+```
 
 The InfluxDB output plugin configuration contains the following options:
 
