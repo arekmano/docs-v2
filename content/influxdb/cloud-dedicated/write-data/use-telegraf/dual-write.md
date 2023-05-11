@@ -10,7 +10,8 @@ weight: 203
 alt_engine: /influxdb/cloud/write-data/no-code/use-telegraf/dual-write/
 ---
 
-If you want to back up your data in two places, or if you're migrating from OSS to Cloud, you may want to set up dual write.
+If you want to back up your data in two places, or if you're migrating from InfluxDB OSS to {{< cloud-name >}},
+you may want to set up Telegraf to dual write.
 
 Use Telegraf to write to both InfluxDB OSS and InfluxDB Cloud Dedicated simultaneously.
 
