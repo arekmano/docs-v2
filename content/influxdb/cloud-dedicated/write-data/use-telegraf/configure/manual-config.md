@@ -1,28 +1,30 @@
 ---
-title: Manually configure Telegraf
-seotitle: Manually configure Telegraf for InfluxDB
+title: Configure Telegraf for InfluxDB
+seotitle: Configure Telegraf to write to InfluxDB
 description: >
+  Telegraf is a plugin-based agent with plugins that are enabled and configured in
+  your Telegraf configuration file (`telegraf.conf`).
   Update existing or create new Telegraf configurations to use the `influxdb_v2`
   output plugin to write to InfluxDB.
   Start Telegraf using the custom configuration.
 menu:
   influxdb_cloud_dedicated:
-    name: Manually
-    parent: Configure Telegraf
-weight: 202
+    name: Configure Telegraf
+    parent: Use Telegraf
+weight: 101
 influxdb/cloud-dedicated/tags: [telegraf]
 related:
   - /{{< latest "telegraf" >}}/plugins/
 alt_engine: /influxdb/cloud/write-data/no-code/use-telegraf/manual-config/
+aliases:
+  - /influxdb/cloud-dedicated/write-data/use-telegraf/manual-config/
 ---
 
 Use the Telegraf `influxdb_v2` output plugin to collect and write metrics into
 an InfluxDB {{< current-version >}} database.
-This article describes how to enable the `influxdb_v2` output plugin in new and
+Learn how to enable the `influxdb_v2` output plugin in new and
 existing Telegraf configurations,
-then start Telegraf using the custom configuration file.
-
-{{< youtube qFS2zANwIrc >}}
+and then start Telegraf using the custom configuration file.
 
 {{% note %}}
 _View the [requirements](/influxdb/cloud-dedicated/write-data/use-telegraf#requirements)
@@ -32,15 +34,14 @@ for using Telegraf with InfluxDB {{< current-version >}}._
 <!-- TOC -->
 
 - [Configure Telegraf input and output plugins](#configure-telegraf-input-and-output-plugins)
-  - [Manually add Telegraf plugins](#manually-add-telegraf-plugins)
+  - [Add Telegraf plugins](#add-telegraf-plugins)
   - [Enable and configure the InfluxDB v2 output plugin](#enable-and-configure-the-influxdb-v2-output-plugin)
       - [urls](#urls)
       - [token](#token)
         - [Avoid storing tokens in telegraf.conf](#avoid-storing-tokens-in-telegrafconf)
       - [organization](#organization)
       - [bucket](#bucket)
-    - [Example influxdb_v2 configuration](#example-influxdb_v2-configuration)
-      - [Write to InfluxDB v1.x and v2.6](#write-to-influxdb-v1x-and-v26)
+      - [Write to InfluxDB v1.x and InfluxDB Cloud Dedicated](#write-to-influxdb-v1x-and-influxdb-cloud-dedicated)
 - [Start Telegraf](#start-telegraf)
 
 <!-- /TOC -->
@@ -53,9 +54,9 @@ Output plugins define destinations where metrics are sent.
 
 _See [Telegraf plugins](/{{< latest "telegraf" >}}/plugins/) for a complete list of available plugins._
 
-### Manually add Telegraf plugins
+### Add Telegraf plugins
 
-To manually add any of the available [Telegraf plugins](/{{< latest "telegraf" >}}/plugins/), follow the steps below.
+To add any of the available [Telegraf plugins](/{{< latest "telegraf" >}}/plugins/), follow the steps below.
 
 1.  Find the plugin you want to enable from the complete list of available
     [Telegraf plugins](/{{< latest "telegraf" >}}/plugins/).
@@ -73,9 +74,9 @@ in the `telegraf.conf`.
 ```toml
 [[outputs.influxdb_v2]]
   urls = ["https://cluster-id.influxdb.io"]
-  token = "$INFLUX_TOKEN"
+  token = "${INFLUX_TOKEN}"
   organization = ""
-  bucket = "$INFLUX_DATABASE"
+  bucket = "${INFLUX_DATABASE}"
 ```
 
 The InfluxDB output plugin configuration contains the following options:
@@ -94,11 +95,13 @@ To write to InfluxDB Cloud Dedicated, include your InfluxDB Cloud Dedicated clus
 Your InfluxDB Cloud Dedicated [database token](/influxdb/cloud-dedicated/admin/tokens/) with _write_ permission to the database.
 For information about viewing tokens, see [List tokens](/influxdb/cloud-dedicated/admin/tokens/list/).
 
+In the example, **`INFLUX_TOKEN`** is an environment variable assigned to a [database token](/influxdb/cloud-dedicated/admin/tokens/) that has _write_ permission to the database.
+
 {{% note %}}
 ###### Avoid storing tokens in `telegraf.conf`
 
-We recommend storing your tokens by setting the `INFLUX_TOKEN` environment
-variable and including the environment variable in your configuration file.
+We recommend storing your tokens in a secure secret store or by setting the `INFLUX_TOKEN` environment
+variable and including the variable in your configuration file.
 
 {{< tabs-wrapper >}}
 {{% tabs %}}
@@ -148,19 +151,7 @@ For InfluxDB Cloud Dedicated, set this to an empty string (`""`).
 
 The name of the InfluxDB Cloud Dedicated database to write data to.
 
-#### Example influxdb_v2 configuration
-
-The following example shows a minimal [`outputs.influxdb_v2`](/{{< latest "telegraf" >}}/plugins/#output-influxdb_v2) configuration for writing data to InfluxDB Cloud Dedicated:
-
-```toml
-[[outputs.influxdb_v2]]
-  urls = ["https://cluster-id.influxdb.io"]
-  token = "${INFLUX_TOKEN}"
-  organization = ""
-  bucket = "DATABASE_NAME"
-```
-
-In the example, **`INFLUX_TOKEN`** is an environment variable assigned to a [database token](/influxdb/cloud-dedicated/admin/tokens/) that has _write_ permission to the database.
+In the example, **`INFLUX_DATABASE`** is an environment variable assigned to the [database](/influxdb/cloud-dedicated/admin/databases/) name.
 
 {{% note %}}
 ##### Write to InfluxDB v1.x and InfluxDB Cloud Dedicated
