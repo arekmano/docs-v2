@@ -16,7 +16,7 @@ menu:
 alt_engine: /influxdb/cloud/write-data/no-code/use-telegraf/
 ---
 
-[Telegraf](https://www.influxdata.com/time-series-platform/telegraf/) is InfluxData's
+[Telegraf](https://www.influxdata.com/time-series-platform/telegraf/) is a
 data collection agent for collecting and reporting metrics.
 Its vast library of input plugins and "plug-and-play" architecture lets you quickly
 and easily collect metrics from many different sources.
