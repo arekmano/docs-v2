@@ -466,7 +466,10 @@ go run ./write.go
 {{% /tab-content %}}
 {{% tab-content %}}
 <!------------------------------- BEGIN TELEGRAF CONTENT ------------------------------>
-[Telegraf](/{{< latest "telegraf" >}}/) with the [`file` input plugin](/{{< latest "telegraf" >}}/plugins/#input-file) consume line protocol or CSV, and then use the `influxdb_v2` output plugin to write the data to InfluxDB.
+Use [Telegraf](/{{< latest "telegraf" >}}/) with the
+[`file` input plugin](/{{< latest "telegraf" >}}/plugins/#input-file) consume line protocol or CSV,
+and then the [`influxdb_v2` output plugin](/{{< latest "telegraf" >}}plugins/#output-influxdb_v2)
+to write the data to {{< cloud-name >}}.
 
 The following example shows a minimal [`outputs.influxdb_v2`](/{{< latest "telegraf" >}}/plugins/#output-influxdb_v2) configuration for writing data to your InfluxDB Cloud Dedicated cluster:
 
