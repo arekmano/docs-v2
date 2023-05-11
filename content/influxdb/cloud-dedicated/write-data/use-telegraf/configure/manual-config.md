@@ -17,7 +17,7 @@ alt_engine: /influxdb/cloud/write-data/no-code/use-telegraf/manual-config/
 ---
 
 Use the Telegraf `influxdb_v2` output plugin to collect and write metrics into
-an InfluxDB {{< current-version >}} bucket.
+an InfluxDB {{< current-version >}} database.
 This article describes how to enable the `influxdb_v2` output plugin in new and
 existing Telegraf configurations,
 then start Telegraf using the custom configuration file.
