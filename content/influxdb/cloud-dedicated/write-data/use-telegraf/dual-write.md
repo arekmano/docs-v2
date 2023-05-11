@@ -24,10 +24,7 @@ Use the configuration below to write your data to both OSS and Cloud instances s
 ## Sample configuration
 
 ```toml
-[[inputs.cpu]]
-[[inputs.mem]]
-
-## Any other inputs, processors, aggregators that you want to include in your configuration.
+# Include any other input, processor, or aggregator plugins that you want to include in your configuration.
 
 # Send data to InfluxDB OSS v2
 [[outputs.influxdb_v2]]
@@ -47,7 +44,7 @@ Use the configuration below to write your data to both OSS and Cloud instances s
   ## Destination bucket to write to.
   bucket = "telegraf"
 
-# Send data to InfluxDB Cloud - AWS West cloud instance
+# Send data to InfluxDB Dedicated instance
  [[outputs.influxdb_v2]]
   ## The URLs of the InfluxDB Cloud instance.
 
