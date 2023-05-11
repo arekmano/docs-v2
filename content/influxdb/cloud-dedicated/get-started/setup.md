@@ -117,4 +117,22 @@ influxctl token create \
   "Read/write token for get-started database"
 ```
 
+The command returns the token ID and the token string.
+**This is the only time the token string is available in plain text.**
+
+You'll need the token string later.
+Save it to a secure secret store or assign it to an environment variable.
+Code samples in later sections assume you assigned the token string to an `INFLUX_TOKEN` environment variable--for example:
+
+```sh
+export INFLUX_TOKEN=WIPUcqDbHC8ju...==
+```
+
+{{% note %}}
+#### Store secure tokens in a secret store
+
+Token strings are returned _only_ on token creation.
+We recommend storing database tokens in a secure secret store.
+{{% /note %}}
+
 {{< page-nav prev="/influxdb/cloud-dedicated/get-started/" next="/influxdb/cloud-dedicated/get-started/write/" keepTab=true >}}
