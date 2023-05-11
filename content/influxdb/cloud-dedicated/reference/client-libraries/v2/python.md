@@ -31,7 +31,11 @@ You'll need the following prerequisites:
     pip install influxdb-client
     ```
 
-2. InfluxDB Cloud Dedicated cluster URL using the HTTPS protocol--for example: https://cluster-id.influxdb.io.
+2. InfluxDB Cloud Dedicated cluster URL using the HTTPS protocol--for example:
+    
+    ```
+    https://cluster-id.influxdb.io
+    ```
 3. Name of the [database](/influxdb/cloud-dedicated/admin/databases/) to write to.
 4. InfluxDB [database token](/influxdb/cloud-dedicated/admin/tokens/) with permission to write to the database.
    _For security reasons, we recommend setting an environment variable to store your token and avoid exposing the raw token value in your script._
