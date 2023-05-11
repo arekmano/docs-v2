@@ -485,7 +485,7 @@ Replace the following:
 
 - **`DATABASE_NAME`**: your InfluxDB Cloud Dedicated [database](/influxdb/cloud-dedicated/admin/databases/)
 
-In the example, **`INFLUX_TOKEN`** is an environment variable assigned to an InfluxDB API token that has _write_ permission to the bucket.
+In the example, **`INFLUX_TOKEN`** is an environment variable containing a [database token](/influxdb/cloud-dedicated/security/tokens/) with _write_ permission to the bucket.
 
 The Telegraf `file` input plugin and the `output-influxdb_v2` output plugin provide many options for reading and writing data.
 To learn more, see how to [use Telegraf to write CSV data](/influxdb/cloud-dedicated/write-data/csv/telegraf/).
