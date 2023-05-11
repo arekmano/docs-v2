@@ -63,7 +63,7 @@ Follow the steps to write [line protocol](/influxdb/cloud-dedicated/reference/sy
    url="https://cluster-id.influxdb.io"
    ```
 
-4. To instantiate the client, call the `influxdb_client.InfluxDBClient()` method with the following keywor parameters: `url`, `org`, and `token`.
+4. To instantiate the client, call the `influxdb_client.InfluxDBClient()` method with the following keyword arguments: `url`, `org`, and `token`.
 
    ```python
    client = influxdb_client.InfluxDBClient(
