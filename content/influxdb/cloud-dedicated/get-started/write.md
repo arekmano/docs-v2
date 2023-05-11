@@ -353,8 +353,8 @@ To write data to InfluxDB Cloud Dedicated using Go, use the
         - **url**: InfluxDB Cloud Dedicated cluster URL
         - **token**: [Database token](/influxdb/cloud-dedicated/admin/tokens/)
           with write access to the **get-started** database.
-          _For security reasons, we recommend setting this as an environment
-          variable rather than including the raw token string._
+          _For security reasons, we recommend reading the token from a secret store or environment
+          variable, rather than including the raw token string in your code._
 
         Because the timestamps in the line protocol are in second
         precision, **use `SetPrecision(time.Second)` to define the write precision option**.
@@ -466,29 +466,64 @@ go run ./write.go
 {{% /tab-content %}}
 {{% tab-content %}}
 <!------------------------------- BEGIN TELEGRAF CONTENT ------------------------------>
-Use [Telegraf](/{{< latest "telegraf" >}}/) with the
-[`file` input plugin](/{{< latest "telegraf" >}}/plugins/#input-file) consume line protocol or CSV,
-and then the [`influxdb_v2` output plugin](/{{< latest "telegraf" >}}plugins/#output-influxdb_v2)
-to write the data to {{< cloud-name >}}.
+Use [Telegraf](/{{< latest "telegraf" >}}/) to consume line protocol or CSV,
+and then write line protocol to {{< cloud-name >}}.
 
-The following example shows a minimal [`outputs.influxdb_v2`](/{{< latest "telegraf" >}}/plugins/#output-influxdb_v2) configuration for writing data to your InfluxDB Cloud Dedicated cluster:
+1. If you haven't already, follow the instructions to [download and install Telegraf](/{{< latest "telegraf" >}}/install/).
 
-```toml
-[[outputs.influxdb_v2]]
-  urls = ["https://cluster-id.influxdb.io"]
-  token = "${INFLUX_TOKEN}"
-  organization = ""
-  bucket = "DATABASE_NAME"
-```
+2. Copy and save the [home sensor data sample](#home-sensor-data-line-protocol) to a file on your local system--for example, `home.lp`.
 
-Replace the following:
+3. Run the following command to generate a Telegraf configuration file (`./telegraf.conf`) that enables the `inputs.file` and `outputs.influxdb_v2` plugins:
 
-- **`DATABASE_NAME`**: your InfluxDB Cloud Dedicated [database](/influxdb/cloud-dedicated/admin/databases/)
+    ```sh
+    telegraf --sample-config \
+      --input-filter file \
+      --output-filter influxdb_v2 \
+      > telegraf.conf
+    ```
 
-In the example, **`INFLUX_TOKEN`** is an environment variable containing a [database token](/influxdb/cloud-dedicated/security/tokens/) with _write_ permission to the bucket.
+4. In your editor, open `./telegraf.conf` and do the following:
 
-The Telegraf `file` input plugin and the `output-influxdb_v2` output plugin provide many options for reading and writing data.
-To learn more, see how to [use Telegraf to write CSV data](/influxdb/cloud-dedicated/write-data/csv/telegraf/).
+  - In the `[[inputs.file]].files` list, replace `"/tmp/metrics.out"` with your sample data filename. If Telegraf can't find a file when started, it stops processing and exits.
+
+    ```toml
+    [[inputs.file]]
+      ## Files to parse each interval.  Accept standard unix glob matching rules,
+      ## as well as ** to match recursive files and directories.
+      files = ["home.lp"]
+    ```
+  - In the `[[outputs.influxdb_v2]]` section, replace the default values with the following configuration for your InfluxDB Cloud Dedicated cluster:
+
+    ```toml
+    [[outputs.influxdb_v2]]
+
+      # InfluxDB Cloud Dedicated cluster URL
+      urls = ["https://cluster-id.influxdb.io"]
+
+      # INFLUX_TOKEN is an environment variable you assigned to your database token
+      token = "${INFLUX_TOKEN}"
+
+      # Leave organization empty for InfluxDB Cloud Dedicated
+      organization = ""
+
+      # Replace DATABASE_NAME with your InfluxDB Cloud Dedicated database name
+      bucket = "DATABASE_NAME"
+    ```
+
+    Replace the following:
+
+    - **`DATABASE_NAME`**: your InfluxDB Cloud Dedicated [database](/influxdb/cloud-dedicated/admin/databases/)
+
+5. To write the data, execute the `telegraf` daemon with the following options:
+
+    - `--config`: Specifies the filepath of the configuration file.
+    - `--once`: Runs a single Telegraf collection cycle for the configured inputs and outputs, and then exits.
+
+    Enter the following command in your terminal:
+
+    ```sh
+    telegraf --once --config ./telegraf.conf
+    ```
 <!------------------------------- END TELEGRAF CONTENT ------------------------------>
 {{% /tab-content %}}
 {{< /tabs-wrapper >}}
