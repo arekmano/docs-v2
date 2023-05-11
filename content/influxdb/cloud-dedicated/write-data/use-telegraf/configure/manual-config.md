@@ -163,10 +163,10 @@ The following example shows a minimal [`outputs.influxdb_v2`](/{{< latest "teleg
 In the example, **`INFLUX_TOKEN`** is an environment variable assigned to a [database token](/influxdb/cloud-dedicated/admin/tokens/) that has _write_ permission to the database.
 
 {{% note %}}
-##### Write to InfluxDB v1.x and v2.6
+##### Write to InfluxDB v1.x and InfluxDB Cloud Dedicated
 
 If a Telegraf agent is already writing to an InfluxDB v1.x database,
-enabling the InfluxDB v2 output plugin will write data to both v1.x and v2.6 instances.
+enabling the InfluxDB v2 output plugin will write data to both v1.x and your {{< cloud-name >}} cluster.
 {{% /note %}}
 
 ## Start Telegraf
